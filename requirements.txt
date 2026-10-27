@@ -1,0 +1,8 @@
+gymnasium==1.4.0
+popgym==1.0.7
+stable-baselines3==2.9.2
+sb3-contrib==2.9.2
+torch==2.14.1
+numpy==2.4.6
+# Needed to build mazelib, which is installed separately (see README)
+Cython==0.29.37

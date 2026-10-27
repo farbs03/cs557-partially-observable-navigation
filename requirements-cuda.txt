@@ -1,0 +1,4 @@
+# Optional: GPU build of PyTorch for NVIDIA GPUs (CUDA 13.2).
+# Install this BEFORE requirements.txt. See README for other CUDA versions.
+--index-url https://download.pytorch.org/whl/cu132
+torch==2.14.1
