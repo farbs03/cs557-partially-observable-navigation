@@ -6,3 +6,4 @@ torch==2.14.1
 numpy==2.4.6
 # Needed to build mazelib, which is installed separately (see README)
 Cython==0.29.37
+tensorboard==2.21.0
