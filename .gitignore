@@ -1,3 +1,5 @@
 pon-env
 saved_models
 tensorboard_logs
+*.py[cod]
+.vscode/
