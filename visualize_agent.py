@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
 from sb3_contrib import RecurrentPPO
 
-from safety_nav_recurrent_ppo import make_env, OBS_CONFIG
+from partial_lidar import make_env, OBS_CONFIG
 
 MODEL_PATH = "rppo_safety_goal"        # same save_path used in train()
 VIDEO_PATH = "agent_rollout.mp4"
