@@ -35,7 +35,8 @@ from custom_goal_env import register_goal_env
 
 # ENV_ID = "SafetyPointGoal1-v0"   # Point agent, goal + 8 hazards + 1 vase
 # Custom layout (registered at import time so subprocess workers see it too):
-ENV_ID = register_goal_env("ObstacleGoal1", hazards=8, vases=1, pillars=4,
+pillar_pos=[(-1.0, -1.0), (1.0, 1.0), (-1.0, 1.0), (1.0, -1.0), (0.0, 1.5), (-1.5, 0.0), (1.5, 0.0), (0.0, -1.5)]
+ENV_ID = register_goal_env("ObstacleGoal1", hazards=4, vases=1, pillars=4, gremlins=1,
                            extents=2.0, lidar_bins=16, lidar_type="pseudo")
 
 # ---- Observability settings: these are your experimental knobs ------------
@@ -150,6 +151,22 @@ def inspect_env():
     env.close()
 
 
+def visualize_environment(n_steps=1000, seed=0):
+    """Open the environment viewer and move the agent with random actions."""
+    env = make_env(seed=seed, obs_config=OBS_CONFIG, render_mode="human")()
+    try:
+        obs, info = env.reset(seed=seed)
+        for _ in range(n_steps):
+            action = env.action_space.sample()
+            obs, reward, terminated, truncated, info = env.step(action)
+            env.render()
+
+            if terminated or truncated:
+                obs, info = env.reset()
+    finally:
+        env.close()
+
+
 def train(total_timesteps=1_000_000, n_envs=8, use_subproc=False,
           save_path="rppo_safety_goal"):
     env_fns = [make_env(rank=i, obs_config=OBS_CONFIG) for i in range(n_envs)]
@@ -219,5 +236,6 @@ def evaluate(save_path="rppo_safety_goal", n_episodes=5, render=False):
 
 if __name__ == "__main__":
     inspect_env()
+    visualize_environment()
     path = train(total_timesteps=200_000)
     evaluate(path)
